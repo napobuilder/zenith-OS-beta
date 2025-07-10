@@ -13,19 +13,22 @@ import {
     deleteDoc,
     doc,
     updateDoc,
-    orderBy
+    orderBy,
+    where,
+    getDocs
 } from 'firebase/firestore';
 
 
 // --- CONFIGURACIÓN DE FIREBASE ---
+// Lee las credenciales desde las variables de entorno
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_API_KEY,
-  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID,
-  measurementId: import.meta.env.VITE_MEASUREMENT_ID
+    apiKey: "AIzaSyAC2fgQaPxHqjS_I7G06sSvRUZnWz8HdJg",
+    authDomain: "zenith-57328.firebaseapp.com",
+    projectId: "zenith-57328",
+    storageBucket: "zenith-57328.appspot.com",
+    messagingSenderId: "292417246834",
+    appId: "1:292417246834:web:2a52d365e3d37395c114eb",
+    measurementId: "G-6PDXYHDYNX"
 };
 
 // Inicializar Firebase
@@ -39,7 +42,7 @@ const Card = ({ children, className = '' }) => (<div className={`bg-black/20 bac
 const SectionTitle = ({ icon, title }) => (<h2 className="text-xl font-bold text-white mb-4 flex items-center">{React.cloneElement(icon, { className: "text-purple-400 w-6 h-6" })}<span className="ml-3 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">{title}</span></h2>);
 const Modal = ({ children, onClose }) => (<div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50 p-4" onClick={onClose}><div className="bg-gray-900 border border-purple-500 rounded-lg p-6 shadow-xl max-w-lg w-full" onClick={e => e.stopPropagation()}>{children}</div></div>);
 
-// --- COMPONENTES CON LÓGICA ---
+// --- COMPONENTES ---
 
 const ErrorModal = ({ message, onClose }) => ( <Modal onClose={onClose}> <div className="text-center"> <AlertTriangle className="w-12 h-12 text-red-500 mx-auto mb-4" /> <h2 className="text-xl font-bold text-white mb-2">Error de Configuración</h2> <p className="text-gray-300">{message}</p> <button onClick={onClose} className="mt-6 bg-red-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-red-700 transition-colors"> Entendido </button> </div> </Modal> );
 
@@ -92,6 +95,7 @@ const SettingsManager = ({ configData, onConfigChange }) => {
         </Card>
     );
 };
+
 
 const SleepCycleCalculator = () => {
     const [wakeUpTimes, setWakeUpTimes] = useState([]);
